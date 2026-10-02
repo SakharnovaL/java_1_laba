@@ -21,7 +21,7 @@ class Complex_Num{
 
         String s = num.trim().replace(" ", "");
         int sign_pos = -1;
-        for(int i = 0; i < s.length(); i++){
+        for(int i = 1; i < s.length(); i++){
             char c = s.charAt(i);
             if(c == '+' || c == '-') {
                 sign_pos = i;
@@ -50,6 +50,12 @@ class Complex_Num{
                 }
             }
             else{
+                if(!s.endsWith("i")){
+                    System.out.println("некорректная форма: '" + num + "'. ожидается 'i' в конце для мнимой части, поэтому ваше число принимает вид 0 + 0i");
+                    des_part = 0;
+                    mni_part = 0;
+                    return;
+                }
                 des_part = Double.parseDouble(s.substring(0, sign_pos));
                 String mni_str = s.substring(sign_pos, s.length() - 1);
                 if(mni_str.equals("+")){

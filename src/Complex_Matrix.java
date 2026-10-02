@@ -80,8 +80,10 @@ class Complex_Matrix{
     }
 
     Complex_Matrix sum_matrix(Complex_Matrix matrix_2){
+        String PINK   = "\u001B[35m";
+        String RESET  = "\u001B[0m";
         if(this.columns != matrix_2.columns || this.rows != matrix_2.rows){
-            System.out.printf("нельзя сложить матрицы, так как их размерность не совпадает");
+            System.out.printf(PINK + "НЕЛЬЗЯ СЛОЖИТЬ МАТРИЦЫ" + RESET + ", так как их размерность не совпадает\n");
             return null;
         }
 
@@ -126,7 +128,7 @@ class Complex_Matrix{
 
     double[] determinate(){
         if(this.rows != this.columns){
-            System.out.println("матрица не квадратная, детерминант нельзя посчитать");
+            //System.out.println("матрица не квадратная, детерминант нельзя посчитать");
             return null;
         }
         double[] det = {0, 0};
@@ -175,14 +177,14 @@ class Complex_Matrix{
     void print_determinate(){
         double[] det = this.determinate();
         if(det == null){
-            System.out.println("детерминант не вычеслен");
+            System.out.println("детерминант не вычеслен, тк матрица не квадратная\nя вас предупреждала");
             return;
         }
         if(det[1] >= 0){
             System.out.printf("det = %.2f + %.2fi", det[0], det[1]);
         }
         else{
-            System.out.printf("det = %.2f - %.2fi", det[0], det[1]);
+            System.out.printf("det = %.2f %.2fi", det[0], det[1]);
         }
     }
 
@@ -215,6 +217,14 @@ class Complex_Matrix{
 
         int n = this.columns;
         Complex_Matrix res = new Complex_Matrix(n, n);
+
+        if(n == 1){
+            double c0 = det[0], c1 = det[1];
+            double den = c0 * c0 + c1 * c1;
+            res.matrix[0][0][0] =  c0 / den;
+            res.matrix[0][0][1] = -c1 / den;
+            return res;
+        }
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
